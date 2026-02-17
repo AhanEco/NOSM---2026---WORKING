@@ -8,10 +8,23 @@ import os
 import json
 
 # Configuration
-DATA_DIR = "data"
-MODEL_DIR = "models"
-PROCESSED_DATA_FILE = os.path.join(DATA_DIR, "processed_data.csv")
-MODEL_FILE = os.path.join(MODEL_DIR, "model.json")
+def find_file(filename, search_paths):
+    for path in search_paths:
+        full_path = os.path.join(path, filename)
+        if os.path.exists(full_path):
+            return full_path
+    return None
+
+PROCESSED_DATA_FILE = find_file("processed_data.csv", ["data", "."])
+MODEL_FILE = find_file("model.json", ["models", "."])
+
+if PROCESSED_DATA_FILE is None:
+    st.error("Could not find 'processed_data.csv'. Please upload it to the root or 'data/' folder.")
+    st.stop()
+    
+if MODEL_FILE is None:
+    st.error("Could not find 'model.json'. Please upload it to the root or 'models/' folder.")
+    st.stop()
 
 # Set Page Config
 st.set_page_config(page_title="Startup Survival Predictor", layout="wide")
