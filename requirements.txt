@@ -1,0 +1,8 @@
+pandas
+numpy
+xgboost
+networkx
+matplotlib
+streamlit
+scikit-learn
+scipy
